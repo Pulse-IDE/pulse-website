@@ -1,0 +1,101 @@
+---
+import { releaseAssets } from "@/data/releases";
+---
+
+<section class="hero">
+  <h1>Pulse IDE</h1>
+  <p>Ultra-lightweight, telemetry-free, open-source development environment.</p>
+  <div id="download-root" data-assets={JSON.stringify(releaseAssets)}>
+    <a id="download-primary" class="btn" href="#">Detecting your platform...</a>
+    <ul id="download-all" class="asset-list"></ul>
+  </div>
+</section>
+
+<style>
+  .hero {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+    font-family: system-ui, sans-serif;
+    color: #e6edf3;
+    background: #0d1117;
+    min-height: 100vh;
+  }
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+  p {
+    color: #8b949e;
+    margin-bottom: 2rem;
+  }
+  .btn {
+    display: inline-block;
+    background: #2f81f7;
+    color: white;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .asset-list {
+    margin-top: 2rem;
+    padding: 0;
+    list-style: none;
+  }
+  .asset-list li {
+    margin: 0.5rem 0;
+  }
+  .asset-list a {
+    color: #79c0ff;
+  }
+</style>
+
+<script>
+  type TargetOs = "macos" | "linux" | "windows" | "unknown";
+  interface ReleaseAsset {
+    os: TargetOs;
+    arch: string;
+    label: string;
+    url: string;
+  }
+
+  function detectOs(): TargetOs {
+    const ua = navigator.userAgent.toLowerCase();
+    const platform = navigator.platform.toLowerCase();
+    if (platform.includes("mac") || ua.includes("mac os")) {
+      return "macos";
+    }
+    if (platform.includes("win") || ua.includes("windows")) {
+      return "windows";
+    }
+    if (platform.includes("linux") || ua.includes("linux")) {
+      return "linux";
+    }
+    return "unknown";
+  }
+
+  const root = document.getElementById("download-root");
+  const primary = document.getElementById("download-primary") as HTMLAnchorElement | null;
+  const list = document.getElementById("download-all");
+  if (root && primary && list) {
+    const assets = JSON.parse(root.dataset.assets ?? "[]") as ReleaseAsset[];
+    const os = detectOs();
+    const preferred =
+      assets.find((item) => item.os === os) ??
+      assets.find((item) => item.os === "linux") ??
+      assets[0];
+    if (preferred) {
+      primary.href = preferred.url;
+      primary.textContent = `Download for ${preferred.label}`;
+    }
+    for (const asset of assets) {
+      const li = document.createElement("li");
+      const link = document.createElement("a");
+      link.href = asset.url;
+      link.textContent = asset.label;
+      li.appendChild(link);
+      list.appendChild(li);
+    }
+  }
+</script>
