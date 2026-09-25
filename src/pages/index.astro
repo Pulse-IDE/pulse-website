@@ -1,14 +1,16 @@
 ---
-import DownloadHero from "@/components/DownloadHero.astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SiteHeader from "@/components/SiteHeader.astro";
+import HeroDownload from "@/components/HeroDownload.astro";
+import Features from "@/components/Features.astro";
+import DownloadMatrix from "@/components/DownloadMatrix.astro";
+import SiteFooter from "@/components/SiteFooter.astro";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Pulse IDE</title>
-  </head>
-  <body>
-    <DownloadHero />
-  </body>
-</html>
+<BaseLayout>
+  <SiteHeader />
+  <HeroDownload />
+  <Features />
+  <DownloadMatrix />
+  <SiteFooter />
+</BaseLayout>

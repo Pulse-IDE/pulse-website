@@ -1,0 +1,31 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Pulse IDE",
+  description = "Ultra-lightweight, telemetry-free, open-source IDE for every platform.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233b82f6'/%3E%3Cpath d='M18 44V20h8l10 14 10-14h8v24h-7V31l-9 12h-4L24 31v13z' fill='white'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <div class="page">
+      <slot />
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  @import "../styles/global.css";
+</style>

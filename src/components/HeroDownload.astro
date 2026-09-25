@@ -1,0 +1,91 @@
+---
+import { assetUrl, releaseAssets } from "@/data/releases";
+---
+
+<section class="hero" id="top">
+  <div class="hero-copy">
+    <h1>Code at full speed. Zero telemetry.</h1>
+    <p>
+      Pulse is a native IDE built with Tauri and Rust. Fast startup, low memory,
+      and installers for macOS, Linux, and Windows.
+    </p>
+    <div class="hero-badges">
+      <span class="badge">MIT / Apache-2.0</span>
+      <span class="badge">Open Source</span>
+      <span class="badge">Cross Platform</span>
+      <span class="badge">No Telemetry</span>
+    </div>
+  </div>
+  <aside class="hero-card">
+    <h2>Recommended for your system</h2>
+    <div
+      id="download-root"
+      data-assets={JSON.stringify(
+        releaseAssets.map((item) => ({
+          ...item,
+          url: assetUrl(item.fileName),
+        })),
+      )}
+    >
+      <a id="download-primary" class="primary-download" href={assetUrl("Pulse_x86_64.AppImage")}>
+        Download Pulse IDE
+      </a>
+      <p id="detected-os" class="detected-os">Detecting platform...</p>
+    </div>
+  </aside>
+</section>
+
+<script>
+  type TargetOs = "macos" | "linux" | "windows";
+  interface ReleaseAssetWire {
+    os: TargetOs;
+    arch: string;
+    label: string;
+    hint: string;
+    url: string;
+    recommended?: boolean;
+  }
+
+  function detectOs(): TargetOs {
+    const ua = navigator.userAgent.toLowerCase();
+    const platform = navigator.platform.toLowerCase();
+    if (platform.includes("mac") || ua.includes("mac os")) {
+      return "macos";
+    }
+    if (platform.includes("win") || ua.includes("windows")) {
+      return "windows";
+    }
+    return "linux";
+  }
+
+  function detectArch(): string {
+    const ua = navigator.userAgent.toLowerCase();
+    if (ua.includes("arm") || ua.includes("aarch64")) {
+      return "aarch64";
+    }
+    if (ua.includes("win64") || ua.includes("x64") || ua.includes("x86_64")) {
+      return "x86_64";
+    }
+    return "universal";
+  }
+
+  const root = document.getElementById("download-root");
+  const primary = document.getElementById("download-primary") as HTMLAnchorElement | null;
+  const detected = document.getElementById("detected-os");
+  if (root && primary && detected) {
+    const assets = JSON.parse(root.dataset.assets ?? "[]") as ReleaseAssetWire[];
+    const os = detectOs();
+    const arch = detectArch();
+    const preferred =
+      assets.find((item) => item.os === os && item.arch === arch && item.recommended) ??
+      assets.find((item) => item.os === os && item.recommended) ??
+      assets.find((item) => item.os === os) ??
+      assets.find((item) => item.recommended) ??
+      assets[0];
+    if (preferred) {
+      primary.href = preferred.url;
+      primary.textContent = `Download ${preferred.label}`;
+      detected.textContent = `${preferred.label} · ${preferred.hint}`;
+    }
+  }
+</script>

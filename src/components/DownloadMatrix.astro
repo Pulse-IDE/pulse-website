@@ -1,0 +1,55 @@
+---
+import {
+  assetUrl,
+  platformSections,
+  releaseAssets,
+  type PackageKind,
+} from "@/data/releases";
+
+const kindLabels: Record<PackageKind, string> = {
+  dmg: "DMG",
+  appimage: "IMG",
+  deb: "DEB",
+  rpm: "RPM",
+  msi: "MSI",
+  exe: "EXE",
+};
+---
+
+<section class="download-section" id="downloads">
+  <div class="section-head">
+    <h2>Download Pulse for your operating system</h2>
+    <p>Choose the installer that matches your platform and CPU architecture.</p>
+  </div>
+  <div class="platform-grid">
+    {
+      platformSections.map((section) => {
+        const items = releaseAssets.filter((asset) => asset.os === section.os);
+        return (
+          <article class="platform-panel">
+            <header>
+              <h3>{section.title}</h3>
+              <p>{section.description}</p>
+            </header>
+            <ul class="download-list">
+              {items.map((item) => (
+                <li class={`download-item ${item.recommended ? "recommended" : ""}`}>
+                  <a href={assetUrl(item.fileName)} download={item.fileName}>
+                    <span class="kind-pill">{kindLabels[item.kind]}</span>
+                    <span class="download-meta">
+                      <strong>{item.label}</strong>
+                      <span>{item.hint}</span>
+                    </span>
+                    <span class="download-arrow" aria-hidden="true">
+                      ↓
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </article>
+        );
+      })
+    }
+  </div>
+</section>
