@@ -1,0 +1,17 @@
+{
+  "id": "pulse-prettier-lite",
+  "name": "Pulse Prettier Lite",
+  "version": "1.0.0",
+  "publisher": "Pulse-IDE",
+  "description": "Minimal JSON and TypeScript formatter for Pulse IDE",
+  "engine": "^0.1.0",
+  "entry": "src/extension.ts",
+  "contributes": {
+    "commands": [
+      {
+        "id": "pulse.formatDocument",
+        "title": "Pulse: Format Document"
+      }
+    ]
+  }
+}

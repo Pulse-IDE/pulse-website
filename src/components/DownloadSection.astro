@@ -1,23 +1,23 @@
 ---
-import { assetUrl, releaseAssets } from "@/data/releases";
+import { assetUrl, releaseAssets } from "@site/data/releases";
+import type { SiteCopy } from "@site/i18n/translations";
+import DownloadMatrix from "@site/components/DownloadMatrix.astro";
+
+interface Props {
+  t: SiteCopy;
+  showMatrix?: boolean;
+}
+
+const { t, showMatrix = true } = Astro.props;
 ---
 
-<section class="hero" id="top">
-  <div class="hero-copy">
-    <h1>Code at full speed. Zero telemetry.</h1>
-    <p>
-      Pulse is a native IDE built with Tauri and Rust. Fast startup, low memory,
-      and installers for macOS, Linux, and Windows.
-    </p>
-    <div class="hero-badges">
-      <span class="badge">MIT / Apache-2.0</span>
-      <span class="badge">Open Source</span>
-      <span class="badge">Cross Platform</span>
-      <span class="badge">No Telemetry</span>
-    </div>
-  </div>
-  <aside class="hero-card">
-    <h2>Recommended for your system</h2>
+<section class="download-section" id="downloads">
+  <header class="section-head">
+    <h2>{t.download.heading}</h2>
+    <p>{t.download.intro}</p>
+  </header>
+  <div class="download-hero-card">
+    <h3>{t.download.recommended}</h3>
     <div
       id="download-root"
       data-assets={JSON.stringify(
@@ -26,13 +26,20 @@ import { assetUrl, releaseAssets } from "@/data/releases";
           url: assetUrl(item.fileName),
         })),
       )}
+      data-detecting={t.download.detecting}
     >
       <a id="download-primary" class="primary-download" href={assetUrl("Pulse_x86_64.AppImage")}>
         Download Pulse IDE
       </a>
-      <p id="detected-os" class="detected-os">Detecting platform...</p>
+      <p id="detected-os" class="detected-os">{t.download.detecting}</p>
     </div>
-  </aside>
+  </div>
+  {showMatrix ? (
+    <>
+      <h3 class="matrix-title">{t.download.allPlatforms}</h3>
+      <DownloadMatrix />
+    </>
+  ) : null}
 </section>
 
 <script>

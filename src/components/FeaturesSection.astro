@@ -1,0 +1,24 @@
+---
+import type { SiteCopy } from "@site/i18n/translations";
+
+interface Props {
+  t: SiteCopy;
+}
+
+const { t } = Astro.props;
+---
+
+<section class="features-section">
+  <header class="section-head">
+    <h2>{t.features.heading}</h2>
+    <p>{t.features.intro}</p>
+  </header>
+  <div class="features">
+    {t.features.items.map((item) => (
+      <article class="feature-card">
+        <h3>{item.title}</h3>
+        <p>{item.body}</p>
+      </article>
+    ))}
+  </div>
+</section>

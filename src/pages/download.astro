@@ -1,0 +1,15 @@
+---
+import BaseLayout from "@site/layouts/BaseLayout.astro";
+import SiteHeader from "@site/components/SiteHeader.astro";
+import SiteFooter from "@site/components/SiteFooter.astro";
+import DownloadSection from "@site/components/DownloadSection.astro";
+import { pageContext } from "@site/i18n/pageContext";
+
+const { locale, t } = pageContext();
+---
+
+<BaseLayout locale={locale} t={t} title={t.meta.downloadTitle} description={t.meta.downloadDescription} wide>
+  <SiteHeader locale={locale} t={t} active="download" />
+  <DownloadSection t={t} />
+  <SiteFooter t={t} />
+</BaseLayout>

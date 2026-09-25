@@ -1,0 +1,26 @@
+---
+import BaseLayout from "@site/layouts/BaseLayout.astro";
+import SiteHeader from "@site/components/SiteHeader.astro";
+import SiteFooter from "@site/components/SiteFooter.astro";
+import { locales, defaultLocale } from "@site/i18n/config";
+import { pageContext } from "@site/i18n/pageContext";
+
+export function getStaticPaths() {
+  return locales
+    .filter((lang) => lang !== defaultLocale)
+    .map((lang) => ({ params: { lang } }));
+}
+
+const { locale, t } = pageContext(Astro.params.lang);
+---
+
+<BaseLayout locale={locale} t={t} title={t.meta.aboutTitle} description={t.meta.aboutDescription} wide>
+  <SiteHeader locale={locale} t={t} active="about" />
+  <article class="prose-page">
+    <h1>{t.about.heading}</h1>
+    {t.about.paragraphs.map((paragraph) => (
+      <p>{paragraph}</p>
+    ))}
+  </article>
+  <SiteFooter t={t} />
+</BaseLayout>

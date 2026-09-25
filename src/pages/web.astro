@@ -1,0 +1,8 @@
+---
+import WorkbenchLayout from "@site/layouts/WorkbenchLayout.astro";
+import { pageContext } from "@site/i18n/pageContext";
+
+const { locale, t } = pageContext();
+---
+
+<WorkbenchLayout locale={locale} t={t} />

@@ -46,10 +46,16 @@ a {
   margin: 0 auto;
 }
 
+.page-wide {
+  width: min(1280px, calc(100% - 2.5rem));
+}
+
 .site-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
   padding: 1.25rem 0;
 }
 
@@ -71,9 +77,26 @@ a {
 
 .nav-links {
   display: flex;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
   font-size: 0.92rem;
   color: var(--muted);
+}
+
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.lang-switch select {
+  background: var(--bg-card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.35rem 0.5rem;
 }
 
 .nav-links a {
@@ -90,6 +113,37 @@ a {
   grid-template-columns: 1.2fr 0.8fr;
   gap: 2rem;
   padding: 2.5rem 0 3rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.secondary-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.95rem 1.2rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.secondary-download:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.card-body {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin: 0 0 1rem;
 }
 
 .hero-copy h1 {
@@ -162,11 +216,48 @@ a {
   color: var(--muted);
 }
 
+.features-section {
+  margin-bottom: 3.5rem;
+}
+
 .features {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
-  margin-bottom: 3rem;
+}
+
+.prose-page {
+  max-width: 70ch;
+  margin: 1rem 0 3rem;
+  line-height: 1.65;
+}
+
+.prose-page h1 {
+  margin-top: 0;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+}
+
+.prose-page p {
+  color: var(--muted);
+}
+
+.download-hero-card {
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.download-hero-card h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+.matrix-title {
+  margin: 0 0 1rem;
+  font-size: 1.2rem;
 }
 
 .feature-card {
@@ -309,8 +400,10 @@ a {
   .platform-grid {
     grid-template-columns: 1fr;
   }
+}
 
-  .nav-links {
-    display: none;
+@media (max-width: 720px) {
+  .features {
+    grid-template-columns: 1fr;
   }
 }

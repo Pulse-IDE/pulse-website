@@ -1,6 +1,16 @@
+---
+import type { SiteCopy } from "@site/i18n/translations";
+
+interface Props {
+  t: SiteCopy;
+}
+
+const { t } = Astro.props;
+---
+
 <footer class="site-footer">
-  <span>Pulse IDE · Open Source · Pulse-IDE Organization</span>
+  <span>{t.footer.tagline}</span>
   <span>
-    <a href="https://github.com/Pulse-IDE/pulse-core/releases/latest">Latest release</a>
+    <a href="https://github.com/Pulse-IDE/pulse-core/releases/latest">{t.footer.latestRelease}</a>
   </span>
 </footer>

@@ -1,0 +1,24 @@
+{
+  "id": "pulse-theme-midnight",
+  "name": "Pulse Midnight",
+  "version": "1.0.0",
+  "publisher": "Pulse-IDE",
+  "description": "High contrast dark theme tuned for Pulse IDE",
+  "engine": "^0.1.0",
+  "entry": "src/extension.ts",
+  "contributes": {
+    "themes": [
+      {
+        "id": "pulse-midnight",
+        "label": "Pulse Midnight",
+        "ui": {
+          "background": "#050608",
+          "surface": "#0f1318",
+          "foreground": "#eef2f7",
+          "accent": "#5b9dff",
+          "border": "#2a3140"
+        }
+      }
+    ]
+  }
+}
