@@ -1,16 +1,28 @@
 ---
+import PulseLogo from "@site/components/brand/PulseLogo.astro";
+import { localizedPath, type Locale } from "@site/i18n/config";
 import type { SiteCopy } from "@site/i18n/translations";
 
 interface Props {
+  locale: Locale;
   t: SiteCopy;
 }
 
-const { t } = Astro.props;
+const { locale, t } = Astro.props;
+const mk = (segment: string) => localizedPath(locale, segment);
 ---
 
 <footer class="site-footer">
-  <span>{t.footer.tagline}</span>
-  <span>
+  <div>
+    <PulseLogo size="sm" href={mk("/")} />
+    <p class="site-footer__meta">{t.footer.tagline}</p>
+  </div>
+  <div class="site-footer__links">
+    <a href={mk("/features")}>{t.nav.features}</a>
+    <a href={mk("/download")}>{t.nav.download}</a>
+    <a href={mk("/web")}>{t.nav.webIde}</a>
+    <a href={mk("/privacy")}>{t.nav.privacy}</a>
+    <a href="https://github.com/Pulse-IDE/pulse-core">{t.nav.github}</a>
     <a href="https://github.com/Pulse-IDE/pulse-core/releases/latest">{t.footer.latestRelease}</a>
-  </span>
+  </div>
 </footer>

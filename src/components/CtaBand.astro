@@ -1,0 +1,19 @@
+---
+import { localizedPath, type Locale } from "@site/i18n/config";
+import type { SiteCopy } from "@site/i18n/translations";
+
+interface Props {
+  locale: Locale;
+  t: SiteCopy;
+}
+
+const { locale, t } = Astro.props;
+---
+
+<section class="cta-band">
+  <div>
+    <h2>{t.home.webCardTitle}</h2>
+    <p>{t.home.webCardBody}</p>
+  </div>
+  <a class="btn btn--primary" href={localizedPath(locale, "/web")}>{t.home.webCardAction}</a>
+</section>

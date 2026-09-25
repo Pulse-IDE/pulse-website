@@ -22,5 +22,5 @@ const { locale, t } = pageContext(Astro.params.lang);
       <p>{paragraph}</p>
     ))}
   </article>
-  <SiteFooter t={t} />
+  <SiteFooter locale={locale} t={t} />
 </BaseLayout>

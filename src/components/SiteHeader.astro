@@ -1,4 +1,5 @@
 ---
+import PulseLogo from "@site/components/brand/PulseLogo.astro";
 import { localizedPath, localeLabels, type Locale } from "@site/i18n/config";
 import type { SiteCopy } from "@site/i18n/translations";
 
@@ -12,49 +13,59 @@ const { locale, t, active } = Astro.props;
 const mk = (segment: string) => localizedPath(locale, segment);
 ---
 
-<header class="site-header">
-  <a class="brand" href={mk("/")}>
-    <span class="brand-mark" aria-hidden="true"></span>
-    <span>Pulse IDE</span>
-  </a>
-  <nav class="nav-links" aria-label="Primary">
-    <a href={mk("/")} aria-current={active === "home" ? "page" : undefined}>{t.nav.home}</a>
-    <a href={mk("/features")} aria-current={active === "features" ? "page" : undefined}>{t.nav.features}</a>
-    <a href={mk("/download")} aria-current={active === "download" ? "page" : undefined}>{t.nav.download}</a>
-    <a href={mk("/web")} aria-current={active === "web" ? "page" : undefined}>{t.nav.webIde}</a>
-    <a href={mk("/about")} aria-current={active === "about" ? "page" : undefined}>{t.nav.about}</a>
-    <a href={mk("/privacy")} aria-current={active === "privacy" ? "page" : undefined}>{t.nav.privacy}</a>
-    <a href="https://github.com/Pulse-IDE/pulse-core">{t.nav.github}</a>
-    <a href="https://github.com/Pulse-IDE/pulse-docs">{t.nav.docs}</a>
-  </nav>
-  <div class="lang-switch">
-    <label for="lang-select">{t.lang.label}</label>
-    <select id="lang-select" data-current={locale}>
-      {
-        Object.entries(localeLabels).map(([code, label]) => (
-          <option value={code} selected={code === locale}>
-            {label}
-          </option>
-        ))
-      }
-    </select>
-  </div>
-</header>
+<div class="site-header-wrap" id="site-header-wrap">
+  <header class="site-header">
+    <PulseLogo href={mk("/")} />
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="site-nav">
+      ☰
+    </button>
+    <nav class="site-header__nav" id="site-nav" aria-label="Primary">
+      <a href={mk("/")} aria-current={active === "home" ? "page" : undefined}>{t.nav.home}</a>
+      <a href={mk("/features")} aria-current={active === "features" ? "page" : undefined}>{t.nav.features}</a>
+      <a href={mk("/download")} aria-current={active === "download" ? "page" : undefined}>{t.nav.download}</a>
+      <a href={mk("/web")} aria-current={active === "web" ? "page" : undefined}>{t.nav.webIde}</a>
+      <a href={mk("/about")} aria-current={active === "about" ? "page" : undefined}>{t.nav.about}</a>
+    </nav>
+    <div class="site-header__actions">
+      <div class="lang-switch">
+        <label for="lang-select">{t.lang.label}</label>
+        <select id="lang-select" data-current={locale}>
+          {
+            Object.entries(localeLabels).map(([code, label]) => (
+              <option value={code} selected={code === locale}>
+                {label}
+              </option>
+            ))
+          }
+        </select>
+      </div>
+      <a class="btn btn--primary" href={mk("/download")}>{t.hero.ctaDownload}</a>
+    </div>
+  </header>
+</div>
 
 <script>
   const select = document.getElementById("lang-select") as HTMLSelectElement | null;
-  if (select) {
-    select.addEventListener("change", () => {
-      const next = select.value;
-      const path = window.location.pathname.replace(/^\/(en|it|es|fr|de|pt|ja|zh|ko|ru)(?=\/|$)/, "");
-      const normalized = path === "" ? "/" : path;
-      const target =
-        next === "en"
-          ? normalized
-          : normalized === "/"
-            ? `/${next}`
-            : `/${next}${normalized}`;
-      window.location.href = target;
-    });
-  }
+  select?.addEventListener("change", () => {
+    const next = select.value;
+    const path = window.location.pathname.replace(/^\/(en|it|es|fr|de|pt|ja|zh|ko|ru)(?=\/|$)/, "");
+    const normalized = path === "" ? "/" : path;
+    const target =
+      next === "en" ? normalized : normalized === "/" ? `/${next}` : `/${next}${normalized}`;
+    window.location.href = target;
+  });
+
+  const toggle = document.getElementById("nav-toggle");
+  const nav = document.getElementById("site-nav");
+  toggle?.addEventListener("click", () => {
+    const open = nav?.classList.toggle("is-open");
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+
+  const wrap = document.getElementById("site-header-wrap");
+  window.addEventListener(
+    "scroll",
+    () => wrap?.classList.toggle("is-scrolled", window.scrollY > 8),
+    { passive: true },
+  );
 </script>

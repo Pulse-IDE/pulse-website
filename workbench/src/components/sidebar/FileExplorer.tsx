@@ -25,15 +25,13 @@ function TreeNode({ entry }: { entry: FileEntry }) {
       <button
         type="button"
         onClick={() => void onOpen()}
-        className="flex w-full items-center gap-2 rounded px-2 py-1 text-left text-sm hover:bg-pulse-bg"
+        className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm hover:bg-pulse-bg/80"
       >
-        <span className="text-pulse-muted">{entry.isDirectory ? "D" : "F"}</span>
+        <span className="text-pulse-muted">{entry.isDirectory ? "📁" : "📄"}</span>
         <span className="truncate">{entry.name}</span>
       </button>
       {entry.isDirectory && entry.children
-        ? entry.children.map((child) => (
-            <TreeNode key={child.path} entry={child} />
-          ))
+        ? entry.children.map((child) => <TreeNode key={child.path} entry={child} />)
         : null}
     </div>
   );
@@ -56,24 +54,34 @@ export function FileExplorer() {
   };
 
   return (
-    <div className="flex h-full flex-col">
-      <header className="flex items-center justify-between border-b border-pulse-border px-3 py-2">
-        <span className="text-xs font-semibold uppercase tracking-wide text-pulse-muted">
-          Explorer
-        </span>
+    <div className="flex h-full flex-col bg-pulse-sidebar/50">
+      <header className="flex items-center justify-between border-b border-pulse-border px-3 py-2.5">
+        <span className="text-[11px] font-bold uppercase tracking-wider text-pulse-muted">Explorer</span>
         <button
           type="button"
           onClick={() => void pickFolder()}
-          className="rounded bg-pulse-accent px-2 py-1 text-xs text-white"
+          className="rounded-md bg-pulse-accent px-2.5 py-1 text-[11px] font-semibold text-white hover:brightness-110"
         >
-          Open
+          Open folder
         </button>
       </header>
       <div className="min-h-0 flex-1 overflow-auto p-2">
         {root ? (
           tree.map((entry) => <TreeNode key={entry.path} entry={entry} />)
         ) : (
-          <p className="px-2 text-sm text-pulse-muted">Open a workspace folder</p>
+          <div className="flex h-full flex-col items-center justify-center gap-3 px-4 py-8 text-center">
+            <p className="text-sm font-medium text-pulse-fg">No workspace yet</p>
+            <p className="text-xs leading-relaxed text-pulse-muted">
+              Choose a project folder to browse and edit files with Monaco.
+            </p>
+            <button
+              type="button"
+              onClick={() => void pickFolder()}
+              className="mt-1 rounded-md border border-pulse-border bg-pulse-surface px-3 py-1.5 text-xs font-semibold text-pulse-fg hover:border-pulse-accent/50"
+            >
+              Open folder…
+            </button>
+          </div>
         )}
       </div>
     </div>

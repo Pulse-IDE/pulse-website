@@ -1,7 +1,11 @@
 import { useEffect, useRef } from "react";
 import { FitAddon } from "@xterm/addon-fit";
 import { WebLinksAddon } from "@xterm/addon-web-links";
-import { Terminal } from "@xterm/xterm";
+import XTerm from "@xterm/xterm";
+
+const Terminal =
+  (XTerm as unknown as { Terminal: typeof import("@xterm/xterm").Terminal })
+    .Terminal ?? XTerm;
 import {
   terminalCreate,
   terminalKill,

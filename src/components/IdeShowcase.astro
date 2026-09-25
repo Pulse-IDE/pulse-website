@@ -1,0 +1,44 @@
+---
+import { localizedPath, type Locale } from "@site/i18n/config";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<div class="ide-showcase" aria-hidden="true">
+  <div class="ide-showcase__chrome">
+    <div class="ide-showcase__dots">
+      <span></span><span></span><span></span>
+    </div>
+    <span class="ide-showcase__title">Pulse — workspace</span>
+  </div>
+  <div class="ide-showcase__body">
+    <div class="ide-showcase__sidebar">
+      <span class="active"></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="ide-showcase__main">
+      <div class="ide-showcase__tabs">
+        <span class="on">main.ts</span>
+        <span>README.md</span>
+      </div>
+      <div class="ide-showcase__code">
+        <code>
+          <span class="kw">export</span> <span class="fn">function</span> pulse() {"{"}<br />
+          &nbsp;&nbsp;<span class="kw">return</span> <span class="str">"fast · private · yours"</span>;<br />
+          {"}"}
+        </code>
+      </div>
+      <div class="ide-showcase__terminal">
+        <span>$ npm run dev</span>
+        <span class="ok">✓ Pulse ready on :1420</span>
+      </div>
+    </div>
+  </div>
+  <a class="ide-showcase__cta" href={localizedPath(locale, "/web")}>Try live in browser →</a>
+</div>

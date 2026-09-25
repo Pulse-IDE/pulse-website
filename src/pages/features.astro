@@ -11,5 +11,5 @@ const { locale, t } = pageContext();
 <BaseLayout locale={locale} t={t} title={t.meta.featuresTitle} description={t.meta.featuresDescription} wide>
   <SiteHeader locale={locale} t={t} active="features" />
   <FeaturesSection t={t} />
-  <SiteFooter t={t} />
+  <SiteFooter locale={locale} t={t} />
 </BaseLayout>

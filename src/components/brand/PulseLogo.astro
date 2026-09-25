@@ -1,0 +1,43 @@
+---
+interface Props {
+  size?: "sm" | "md" | "lg";
+  showWordmark?: boolean;
+  href?: string;
+}
+
+const { size = "md", showWordmark = true, href } = Astro.props;
+const sizes = { sm: 28, md: 36, lg: 44 };
+const px = sizes[size];
+const Tag = href ? "a" : "div";
+---
+
+<Tag class:list={["pulse-logo", `pulse-logo--${size}`]} href={href}>
+  <svg
+    class="pulse-logo__mark"
+    width={px}
+    height={px}
+    viewBox="0 0 64 64"
+    fill="none"
+    aria-hidden="true"
+  >
+    <rect width="64" height="64" rx="16" fill="url(#pulse-logo-grad)"></rect>
+    <path
+      d="M12 36h8l6-14 8 22 6-14h12"
+      stroke="#fff"
+      stroke-width="3.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"></path>
+    <defs>
+      <linearGradient id="pulse-logo-grad" x1="8" y1="4" x2="56" y2="60" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#5B9DFF"></stop>
+        <stop offset="1" stop-color="#22D3EE"></stop>
+      </linearGradient>
+    </defs>
+  </svg>
+  {showWordmark ? (
+    <span class="pulse-logo__text">
+      <span class="pulse-logo__name">Pulse</span>
+      <span class="pulse-logo__suffix">IDE</span>
+    </span>
+  ) : null}
+</Tag>

@@ -1,4 +1,5 @@
 ---
+import IdeShowcase from "@site/components/IdeShowcase.astro";
 import { localizedPath, type Locale } from "@site/i18n/config";
 import type { SiteCopy } from "@site/i18n/translations";
 
@@ -12,6 +13,7 @@ const { locale, t } = Astro.props;
 
 <section class="hero">
   <div class="hero-copy">
+    <p class="hero-eyebrow">Pulse IDE</p>
     <h1>{t.hero.title}</h1>
     <p>{t.hero.subtitle}</p>
     <div class="hero-badges">
@@ -20,13 +22,9 @@ const { locale, t } = Astro.props;
       ))}
     </div>
     <div class="hero-actions">
-      <a class="primary-download" href={localizedPath(locale, "/download")}>{t.hero.ctaDownload}</a>
-      <a class="secondary-download" href={localizedPath(locale, "/web")}>{t.hero.ctaWeb}</a>
+      <a class="btn btn--primary" href={localizedPath(locale, "/download")}>{t.hero.ctaDownload}</a>
+      <a class="btn btn--ghost" href={localizedPath(locale, "/web")}>{t.hero.ctaWeb}</a>
     </div>
   </div>
-  <aside class="hero-card">
-    <h2>{t.home.webCardTitle}</h2>
-    <p class="card-body">{t.home.webCardBody}</p>
-    <a class="primary-download" href={localizedPath(locale, "/web")}>{t.home.webCardAction}</a>
-  </aside>
+  <IdeShowcase locale={locale} />
 </section>

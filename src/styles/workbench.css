@@ -3,11 +3,77 @@
   min-height: 100vh;
   height: 100vh;
   overflow: hidden;
-  background: var(--pulse-bg, #05070b);
+  display: flex;
+  flex-direction: column;
+  background: #05070b;
+}
+
+.web-chrome {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: rgba(6, 8, 15, 0.95);
+  backdrop-filter: blur(12px);
+}
+
+.web-chrome__center {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.web-chrome__pill {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.web-chrome__hint {
+  font-size: 0.72rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.web-chrome__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.web-chrome__link {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.web-chrome__link:hover {
+  color: var(--text);
+}
+
+.web-chrome__btn {
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  border-radius: 8px;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
 }
 
 .workbench-shell {
-  height: 100vh;
+  flex: 1;
   min-height: 0;
 }
 
@@ -17,4 +83,10 @@
 
 .pulse-web-root > div {
   height: 100%;
+}
+
+@media (max-width: 720px) {
+  .web-chrome__hint {
+    display: none;
+  }
 }

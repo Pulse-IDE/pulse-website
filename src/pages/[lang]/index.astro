@@ -4,6 +4,7 @@ import SiteHeader from "@site/components/SiteHeader.astro";
 import SiteFooter from "@site/components/SiteFooter.astro";
 import HeroSection from "@site/components/HeroSection.astro";
 import FeaturesSection from "@site/components/FeaturesSection.astro";
+import CtaBand from "@site/components/CtaBand.astro";
 import { locales, defaultLocale } from "@site/i18n/config";
 import { pageContext } from "@site/i18n/pageContext";
 
@@ -20,5 +21,6 @@ const { locale, t } = pageContext(Astro.params.lang);
   <SiteHeader locale={locale} t={t} active="home" />
   <HeroSection locale={locale} t={t} />
   <FeaturesSection t={t} />
-  <SiteFooter t={t} />
+  <CtaBand locale={locale} t={t} />
+  <SiteFooter locale={locale} t={t} />
 </BaseLayout>

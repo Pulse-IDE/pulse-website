@@ -1,4 +1,6 @@
 ---
+import MetaHead from "@site/components/MetaHead.astro";
+import WebChrome from "@site/components/WebChrome.astro";
 import type { Locale } from "@site/i18n/config";
 import type { SiteCopy } from "@site/i18n/translations";
 import PulseWebApp from "@site/components/PulseWebApp";
@@ -14,13 +16,10 @@ const { locale, t } = Astro.props;
 <!doctype html>
 <html lang={locale}>
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={t.meta.webDescription} />
-    <title>{t.meta.webTitle}</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%233b82f6'/%3E%3Cpath d='M18 44V20h8l10 14 10-14h8v24h-7V31l-9 12h-4L24 31v13z' fill='white'/%3E%3C/svg%3E" />
+    <MetaHead title={t.meta.webTitle} description={t.meta.webDescription} />
   </head>
   <body class="workbench-body">
+    <WebChrome locale={locale} t={t} />
     <div class="workbench-shell">
       <PulseWebApp client:only="react" />
     </div>
