@@ -2,15 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
+
 :root {
   --pulse-bg: #05070b;
   --pulse-surface: #0b1018;
-  --pulse-border: rgba(148, 163, 184, 0.16);
+  --pulse-border: rgba(148, 163, 184, 0.14);
   --pulse-fg: #f1f5f9;
   --pulse-muted: #94a3b8;
   --pulse-accent: #5b9dff;
-  --pulse-sidebar: #070a10;
-  font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --pulse-sidebar: #060910;
 }
 
 html,
@@ -20,4 +21,11 @@ body,
   margin: 0;
   background-color: var(--pulse-bg);
   color: var(--pulse-fg);
+  font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #334155 transparent;
 }

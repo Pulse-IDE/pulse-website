@@ -69,6 +69,7 @@ a {
 
 .pulse-logo__mark {
   flex-shrink: 0;
+  display: block;
   filter: drop-shadow(0 4px 20px var(--glow));
 }
 

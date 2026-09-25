@@ -14,7 +14,7 @@ const download = localizedPath(locale, "/download");
 ---
 
 <header class="web-chrome">
-  <PulseLogo size="sm" href={home} />
+  <PulseLogo size="sm" showWordmark={false} href={home} />
   <div class="web-chrome__center">
     <span class="web-chrome__pill">Pulse Web</span>
     <span class="web-chrome__hint">{t.web.note}</span>
@@ -22,7 +22,7 @@ const download = localizedPath(locale, "/download");
   <div class="web-chrome__actions">
     <a href={download} class="web-chrome__link">{t.nav.download}</a>
     <a href={home} class="web-chrome__link">{t.nav.home}</a>
-    <button type="button" class="web-chrome__btn" id="web-fullscreen" title="Fullscreen">
+    <button type="button" class="web-chrome__btn" id="web-fullscreen" title="Fullscreen" aria-label="Fullscreen">
       ⛶
     </button>
   </div>

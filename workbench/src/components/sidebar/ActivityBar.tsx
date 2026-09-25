@@ -1,48 +1,45 @@
 import type { ReactNode } from "react";
+import { PulseMark } from "@/components/brand/PulseMark";
+import { WorkbenchIcon } from "@/components/icons/WorkbenchIcon";
 import { useWorkbenchStore, type SidebarPanel } from "@/store/useWorkbenchStore";
 
-const items: Array<{ id: SidebarPanel; label: string; icon: ReactNode }> = [
-  {
-    id: "explorer",
-    label: "Explorer",
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M4 7h16M4 12h10M4 17h14" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    id: "scm",
-    label: "Source Control",
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
-        <circle cx="6" cy="6" r="2" />
-        <circle cx="6" cy="18" r="2" />
-        <circle cx="18" cy="12" r="2" />
-        <path d="M6 8v8M8 6h5a3 3 0 0 1 3 3v3" />
-      </svg>
-    ),
-  },
-  {
-    id: "extensions",
-    label: "Extensions",
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M12 2l2 4 4 .5-3 3 .5 4-4-2-4 2 .5-4-3-3 4-.5z" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    id: "settings",
-    label: "Settings",
-    icon: (
-      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
-        <circle cx="12" cy="12" r="3" />
-        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
-      </svg>
-    ),
-  },
+const items: Array<{ id: SidebarPanel; label: string; icon: "files" | "git" | "extensions" | "settings" }> = [
+  { id: "explorer", label: "Explorer", icon: "files" },
+  { id: "scm", label: "Source Control", icon: "git" },
+  { id: "extensions", label: "Extensions", icon: "extensions" },
+  { id: "settings", label: "Settings", icon: "settings" },
 ];
+
+function ActivityButton({
+  active,
+  label,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  label: string;
+  onClick: () => void;
+  children: ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      title={label}
+      onClick={onClick}
+      className={`relative flex h-10 w-10 items-center justify-center rounded-lg transition-colors ${
+        active
+          ? "bg-pulse-accent/15 text-pulse-accent"
+          : "text-pulse-muted hover:bg-white/5 hover:text-pulse-fg"
+      }`}
+    >
+      {active ? (
+        <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-full bg-pulse-accent" />
+      ) : null}
+      {children}
+    </button>
+  );
+}
 
 export function ActivityBar() {
   const panel = useWorkbenchStore((s) => s.sidebarPanel);
@@ -51,50 +48,29 @@ export function ActivityBar() {
   const terminalVisible = useWorkbenchStore((s) => s.terminalVisible);
 
   return (
-    <nav className="flex w-14 flex-col items-center gap-1 border-r border-pulse-border bg-pulse-sidebar py-3">
-      <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#5B9DFF] to-[#22D3EE] shadow-[0_0_20px_rgba(91,157,255,0.35)]">
-        <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-          <path
-            d="M4 14h4l2-6 4 12 2-6h4"
-            fill="none"
-            stroke="#fff"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+    <nav className="flex w-[52px] shrink-0 flex-col items-center gap-0.5 border-r border-pulse-border bg-[#060910] py-2">
+      <div className="mb-2">
+        <PulseMark size="md" />
       </div>
       {items.map((item) => (
-        <button
+        <ActivityButton
           key={item.id}
-          type="button"
-          aria-label={item.label}
-          title={item.label}
+          label={item.label}
+          active={panel === item.id}
           onClick={() => setPanel(item.id)}
-          className={`flex h-10 w-10 items-center justify-center rounded-lg transition-colors ${
-            panel === item.id
-              ? "bg-pulse-accent/20 text-pulse-accent ring-1 ring-pulse-accent/40"
-              : "text-pulse-muted hover:bg-pulse-surface hover:text-pulse-fg"
-          }`}
         >
-          {item.icon}
-        </button>
+          <WorkbenchIcon name={item.icon} className="h-[18px] w-[18px]" />
+        </ActivityButton>
       ))}
-      <button
-        type="button"
-        aria-label="Terminal"
-        title="Terminal"
-        onClick={() => toggleTerminal(!terminalVisible)}
-        className={`mt-auto flex h-10 w-10 items-center justify-center rounded-lg ${
-          terminalVisible
-            ? "bg-pulse-accent/20 text-pulse-accent ring-1 ring-pulse-accent/40"
-            : "text-pulse-muted hover:bg-pulse-surface hover:text-pulse-fg"
-        }`}
-      >
-        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M4 17l6-5-6-5M12 19h8" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </button>
+      <div className="mt-auto">
+        <ActivityButton
+          label="Terminal"
+          active={terminalVisible}
+          onClick={() => toggleTerminal(!terminalVisible)}
+        >
+          <WorkbenchIcon name="terminal" className="h-[18px] w-[18px]" />
+        </ActivityButton>
+      </div>
     </nav>
   );
 }

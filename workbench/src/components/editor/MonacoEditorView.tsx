@@ -2,6 +2,7 @@ import Editor from "@monaco-editor/react";
 import { useEffect, useRef } from "react";
 import { useWorkbenchStore } from "@/store/useWorkbenchStore";
 import { monacoWorker } from "@/components/editor/monacoWorker";
+import { registerPulseTheme } from "@/components/editor/monacoTheme";
 
 monacoWorker();
 
@@ -67,12 +68,20 @@ export function MonacoEditorView({ tabId, path, value }: MonacoEditorViewProps) 
         height="100%"
         language={language}
         value={value}
-        theme="vs-dark"
+        theme="pulse-dark"
+        beforeMount={registerPulseTheme}
         options={{
           minimap: { enabled: false },
           fontSize: 14,
+          fontFamily: "'IBM Plex Mono', ui-monospace, monospace",
+          lineHeight: 22,
+          padding: { top: 12 },
           scrollBeyondLastLine: false,
           automaticLayout: true,
+          smoothScrolling: true,
+          cursorBlinking: "smooth",
+          renderLineHighlight: "line",
+          bracketPairColorization: { enabled: true },
         }}
         onChange={(next) => updateTabContent(tabId, next ?? "")}
       />

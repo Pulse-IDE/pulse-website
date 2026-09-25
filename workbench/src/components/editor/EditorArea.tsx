@@ -1,3 +1,4 @@
+import { PulseMark } from "@/components/brand/PulseMark";
 import { writeFile } from "@/ipc/client";
 import { useWorkbenchStore } from "@/store/useWorkbenchStore";
 import { MonacoEditorView } from "@/components/editor/MonacoEditorView";
@@ -20,17 +21,17 @@ export function EditorArea() {
 
   return (
     <div className="flex h-full flex-col bg-pulse-bg">
-      <div className="flex items-center gap-0.5 border-b border-pulse-border bg-pulse-surface/80 px-2">
+      <div className="flex items-end gap-px overflow-x-auto border-b border-pulse-border bg-[#070a10] px-1 pt-1">
         {tabs.map((tab) => (
           <div
             key={tab.id}
-            className={`group flex items-center gap-1.5 border-b-2 px-3 py-2 text-sm ${
+            className={`group flex max-w-[200px] items-center gap-1 rounded-t-md border border-b-0 px-2.5 py-1.5 text-xs ${
               tab.id === activeTabId
-                ? "border-pulse-accent text-pulse-fg"
-                : "border-transparent text-pulse-muted"
+                ? "border-pulse-border bg-pulse-bg text-pulse-fg"
+                : "border-transparent bg-transparent text-pulse-muted hover:text-pulse-fg"
             }`}
           >
-            <button type="button" className="max-w-[140px] truncate" onClick={() => setActiveTab(tab.id)}>
+            <button type="button" className="truncate" onClick={() => setActiveTab(tab.id)}>
               {tab.label}
               {tab.dirty ? " •" : ""}
             </button>
@@ -38,7 +39,7 @@ export function EditorArea() {
               type="button"
               aria-label="Close tab"
               onClick={() => closeTab(tab.id)}
-              className="rounded px-1 text-pulse-muted opacity-0 hover:bg-pulse-bg hover:text-pulse-fg group-hover:opacity-100"
+              className="rounded px-1 opacity-60 hover:bg-white/10 hover:opacity-100"
             >
               ×
             </button>
@@ -47,7 +48,8 @@ export function EditorArea() {
         <button
           type="button"
           onClick={() => void saveActive()}
-          className="ml-auto rounded-md bg-pulse-accent px-2.5 py-1 text-xs font-semibold text-white hover:brightness-110"
+          disabled={!active}
+          className="ml-auto mb-1 mr-1 rounded-md bg-pulse-accent px-2.5 py-1 text-[11px] font-semibold text-white disabled:opacity-40"
         >
           Save
         </button>
@@ -57,22 +59,12 @@ export function EditorArea() {
           <MonacoEditorView tabId={active.id} path={active.path} value={active.content} />
         ) : (
           <div className="flex h-full flex-col items-center justify-center gap-4 px-6 text-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#5B9DFF] to-[#22D3EE] shadow-[0_0_32px_rgba(91,157,255,0.35)]">
-              <svg viewBox="0 0 24 24" className="h-7 w-7" aria-hidden="true">
-                <path
-                  d="M4 14h4l2-6 4 12 2-6h4"
-                  fill="none"
-                  stroke="#fff"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
+            <PulseMark size="md" />
             <div>
-              <p className="text-base font-semibold text-pulse-fg">Pulse Editor</p>
-              <p className="mt-1 max-w-sm text-sm text-pulse-muted">
-                Open a folder in the explorer, then pick a file to start editing.
+              <p className="text-lg font-semibold text-pulse-fg">Welcome to Pulse</p>
+              <p className="mt-2 max-w-md text-sm leading-relaxed text-pulse-muted">
+                Open a folder from the explorer, then select a file to edit. Your workspace stays
+                on your machine — no telemetry, no cloud upload.
               </p>
             </div>
           </div>
